@@ -11,8 +11,7 @@ export default function SignupPage() {
         email: "",
         password: "",
         username: "",
-    });
-    
+    })
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
@@ -78,4 +77,5 @@ export default function SignupPage() {
             <Link href="/login">Visit login page</Link>
         </div>
     )
+
 }
