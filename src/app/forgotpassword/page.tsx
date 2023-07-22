@@ -22,10 +22,10 @@ export default function ForgotPasswordPage() {
             const response = await axios.post("/api/users/forgotPassword", user);
             console.log("Email sent", response.data);
             // toast.success("Login success");
-            // router.push("/profile");
+            router.push("/resetpassword");
         } catch (error: any) {
-            // console.log("Login failed", error.message);
-            // toast.error(error.message);
+            console.log("reset password failed", error.message);
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }
@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
             <button
                 onClick={onForgotPassword}
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Submit</button>
-            {/* <Link href="/signup">Visit Signup page</Link> */}
+            <Link href="/signup">Visit Signup page</Link>
         </div>
     )
 
