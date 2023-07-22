@@ -1,63 +1,45 @@
-
 "use client";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordPage() {
     const router = useRouter();
-    const [user, setUser] = React.useState({
-        email: "",
-    });
-
-    const [buttonDisabled, setButtonDisabled] = React.useState(false);
+    const [email, setEmail] = useState("");
     const [loading, setLoading] = React.useState(false);
-
 
     const onForgotPassword = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("/api/users/forgotPassword", user);
-            console.log("Email sent", response.data);
-            // toast.success("Login success");
+            const response = await axios.post("api/users/forgotpassword", { email });
+            console.log("Email Sent", response.data);
             router.push("/resetpassword");
         } catch (error: any) {
-            console.log("reset password failed", error.message);
-            toast.error(error.message);
+            console.log("reset password fail " + error.message);
         } finally {
             setLoading(false);
         }
     }
 
-    useEffect(() => {
-        if (user.email.length > 0) {
-            setButtonDisabled(false);
-        } else {
-            setButtonDisabled(true);
-        }
-    }, [user]);
-
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
             <h1>{loading ? "Processing" : "Forgot Password"}</h1>
-            <hr />
-
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
             <input
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+                className="text-black"
                 id="email"
-                type="text"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="email"
             />
             <button
                 onClick={onForgotPassword}
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Submit</button>
-            <Link href="/signup">Visit Signup page</Link>
+                className="p-2 border border-gray-300
+            rounded-lg mb-4 focus:outline-none 
+            focus:border-gray-600 m-2">Submit</button>
+            <Link href="/signup">Visit Signup Page</Link>
         </div>
     )
-
 }
